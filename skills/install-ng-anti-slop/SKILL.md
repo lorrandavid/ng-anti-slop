@@ -22,11 +22,12 @@ Read the repository's agent instructions and `git status`. Identify the package 
    node <skill-directory>/scripts/install.mjs
    ```
 
-   This copies `eslint.config.js`, `tsconfig.json`, `.prettierrc`, `.prettierignore`, and `.editorconfig`. It also copies the custom `ng-anti-slop` rules to `tools/eslint/ng-anti-slop/` and points the `eslint.config.js` import at that directory. The plugin cannot use `src/`, because that directory holds the application source. The script refuses to overwrite any existing file or directory. Complete when all five files and the plugin directory exist.
+   This copies `eslint.config.js`, `tsconfig.json`, `.prettierrc`, `.prettierignore`, and `.editorconfig`. It also copies the custom `ng-anti-slop` rules to `tools/eslint/ng-anti-slop/` and points the `eslint.config.js` import at that directory. The plugin cannot use `src/`, because that directory holds the application source. The script refuses to overwrite any existing file or directory. If the target `package.json` lists `@ngrx/store`, the script also imports `@ngrx/eslint-plugin` in `eslint.config.js` and adds `ngrx.configs.allTypeChecked` to the TypeScript block. It prints the `@ngrx/store` version when it does this. Complete when all five files and the plugin directory exist.
 
 2. Install current compatible dev dependencies. Query `npm view <package> version` rather than trusting remembered versions, and pin exact versions:
    - `eslint`, `@eslint/js`, `angular-eslint`, `typescript-eslint`, `eslint-config-prettier`
    - `prettier`, `prettier-plugin-organize-imports`
+   - `@ngrx/eslint-plugin`, only if the script reported `@ngrx/store`. Use the exact version of the installed `@ngrx/store`, because NgRx releases its packages together.
    - `typescript`, only if missing. Keep the version the installed Angular supports (Angular 18 needs TypeScript 5.4 or 5.5).
 
    ESLint 10 needs Node 20.19 or later; use ESLint 9 on older Node. If the repository already has any of these packages, keep its version. Use the repository's package manager and do not rewrite unrelated ranges. Complete when the packages install without peer-dependency errors.

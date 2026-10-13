@@ -7,7 +7,7 @@
   "scripts": {
     "check": "pnpm lint && pnpm format:check && pnpm test && pnpm typecheck:plugin && pnpm check:skill-assets",
     "lint": "eslint .",
-    "test": "node --test \"src/**/*.test.js\"",
+    "test": "node --test \"src/**/*.test.js\" \"scripts/*.test.mjs\"",
     "typecheck:plugin": "tsc --noEmit -p tsconfig.plugin.json",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
