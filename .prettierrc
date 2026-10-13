@@ -1,0 +1,7 @@
+{
+  "printWidth": 100,
+  "singleQuote": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "plugins": ["prettier-plugin-organize-imports"],
+  "overrides": [{ "files": "*.html", "options": { "parser": "angular" } }]
+}
