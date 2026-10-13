@@ -10,7 +10,7 @@ Opinionated ESLint, TypeScript and Prettier configuration for Angular 18+, based
 npx skills add <owner>/ng-anti-slop --skill install-ng-anti-slop
 ```
 
-Then ask your coding agent to install ng-anti-slop in the current repository. The skill copies the configuration files, installs compatible dependencies, adapts the files to your workspace layout, runs lint, format and typecheck, and baselines existing lint violations with `eslint --suppress-all`, so only new violations fail. It commits the resulting `eslint-suppressions.json` when you allow commits. In a repository that already has a lint setup, the skill merges by hand and does not overwrite.
+Then ask your coding agent to install ng-anti-slop in the current repository. The skill copies the configuration files, installs compatible dependencies, adapts the files to your workspace layout, runs lint, format and typecheck, and baselines existing lint violations with `eslint --suppress-all`, so only new violations fail. It commits the resulting `eslint-suppressions.json` when you allow commits. If the repository uses `@ngrx/store`, the skill also adds the `@ngrx/eslint-plugin` `allTypeChecked` configuration. In a repository that already has a lint setup, the skill merges by hand and does not overwrite.
 
 ## What you get
 
