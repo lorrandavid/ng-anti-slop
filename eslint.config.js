@@ -12,7 +12,7 @@ export default defineConfig([
     files: ['**/*.ts'],
     extends: [
       eslint.configs.recommended,
-      tseslint.configs.strictTypeChecked,
+      tseslint.configs.recommendedTypeChecked,
       tseslint.configs.stylisticTypeChecked,
       angular.configs.tsRecommended,
       prettierConfig,
@@ -27,6 +27,18 @@ export default defineConfig([
     plugins: { 'ng-anti-slop': ngAntiSlop },
     rules: {
       'ng-anti-slop/protected-template-members': 'error',
+
+      // Keep type evidence: parse input at its boundary instead of widening or asserting.
+      'ng-anti-slop/no-chained-type-assertions': 'error',
+      'ng-anti-slop/no-known-value-widening': 'error',
+      'ng-anti-slop/no-object-parameters': 'error',
+      'ng-anti-slop/no-reduce-accumulator-copy': 'error',
+      'ng-anti-slop/no-runtime-typeof': 'error',
+      'ng-anti-slop/no-unknown-parameters': 'error',
+      'ng-anti-slop/no-unknown-returns': 'error',
+      'ng-anti-slop/no-unknown-type-aliases': 'error',
+      'ng-anti-slop/no-unsafe-dictionary-type': 'error',
+      'ng-anti-slop/no-widen-then-assert': 'error',
 
       // Size and complexity limits
       complexity: ['error', 14],

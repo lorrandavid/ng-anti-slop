@@ -14,16 +14,31 @@ Then ask your coding agent to install ng-anti-slop in the current repository. Th
 
 ## What you get
 
-| File               | Purpose                                                                                                                                                                         |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `eslint.config.js` | ESLint flat config. TypeScript uses `strictTypeChecked` and `stylisticTypeChecked`, plus `angular-eslint` recommended rules. Templates use recommended and accessibility rules. |
-| `tsconfig.json`    | Strict compiler options and strict Angular template checking.                                                                                                                   |
-| `.prettierrc`      | Prettier with 100-column lines, single quotes, the Angular HTML parser and organized imports.                                                                                   |
-| `.prettierignore`  | Lockfile and build output.                                                                                                                                                      |
-| `.editorconfig`    | Editor defaults that match Prettier.                                                                                                                                            |
-| `src/`             | The `ng-anti-slop` ESLint plugin with custom rules. Plain JavaScript with JSDoc types, so it loads on any Node version that ESLint supports.                                    |
+| File               | Purpose                                                                                                                                                                              |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `eslint.config.js` | ESLint flat config. TypeScript uses `recommendedTypeChecked` and `stylisticTypeChecked`, plus `angular-eslint` recommended rules. Templates use recommended and accessibility rules. |
+| `tsconfig.json`    | Strict compiler options and strict Angular template checking.                                                                                                                        |
+| `.prettierrc`      | Prettier with 100-column lines, single quotes, the Angular HTML parser and organized imports.                                                                                        |
+| `.prettierignore`  | Lockfile and build output.                                                                                                                                                           |
+| `.editorconfig`    | Editor defaults that match Prettier.                                                                                                                                                 |
+| `src/`             | The `ng-anti-slop` ESLint plugin with custom rules. Plain JavaScript with JSDoc types, so it loads on any Node version that ESLint supports.                                         |
 
 The rules enforce the [Angular style guide](https://angular.dev/style-guide). `no-restricted-syntax` and `no-restricted-imports` ban decorator-based inputs, outputs and queries, `NgModule`, `CommonModule`, `NgIf` and `NgFor`. The custom `ng-anti-slop/protected-template-members` rule reports public component members that the template reads, because the style guide asks for `protected` there. The rule has an autofix. It matches names with regular expressions and cannot see usage in other files, so keep a member public with an `eslint-disable` comment when a test or another class needs it. The component and directive selector prefix is `app`, which is the Angular default.
+
+The plugin also ports ten rules from [anti-slop](https://github.com/dmmulroy/anti-slop) that reject low-evidence TypeScript. They use syntax and lexical scope, not the type checker, so they resolve type aliases in the same file but not imported types.
+
+| Rule                         | Reports                                                                                                                                                          |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `no-chained-type-assertions` | `input as unknown as User`. Chains made only of `as const` are allowed.                                                                                          |
+| `no-known-value-widening`    | A known value that flows into an explicit `unknown`, `object`, anonymous object or open dictionary type.                                                         |
+| `no-object-parameters`       | The `object` type, or an alias of it, on a function parameter.                                                                                                   |
+| `no-reduce-accumulator-copy` | Copies of a `reduce` accumulator with `Object.assign`, `Array.from` or array copy methods. Spreads are not covered.                                              |
+| `no-runtime-typeof`          | `typeof` narrowing. Existence probes such as `typeof window === 'undefined'` are allowed. The `allowInTypeGuards` option allows `typeof` inside type predicates. |
+| `no-unknown-parameters`      | `unknown` parameters, except `cause` and the subject of a type predicate.                                                                                        |
+| `no-unknown-returns`         | Functions that return `unknown` or `Promise<unknown>`.                                                                                                           |
+| `no-unknown-type-aliases`    | Type aliases that resolve to `unknown`.                                                                                                                          |
+| `no-unsafe-dictionary-type`  | Dictionaries whose value type is `unknown`, `any`, `object` or `{}`. Generic constraints such as `T extends Record<string, unknown>` are allowed.                |
+| `no-widen-then-assert`       | A `const` that widens a known value to `unknown` and is later asserted back to a narrower type.                                                                  |
 
 ## Compatibility
 
