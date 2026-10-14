@@ -23,7 +23,7 @@ Then ask your coding agent to install ng-anti-slop in the current repository. Th
 | `.editorconfig`    | Editor defaults that match Prettier.                                                                                                                                                 |
 | `src/`             | The `ng-anti-slop` ESLint plugin with custom rules. Plain JavaScript with JSDoc types, so it loads on any Node version that ESLint supports.                                         |
 
-The rules enforce the [Angular style guide](https://angular.dev/style-guide). `no-restricted-syntax` and `no-restricted-imports` ban decorator-based inputs, outputs and queries, `NgModule`, `CommonModule`, `NgIf` and `NgFor`. The custom `ng-anti-slop/protected-template-members` rule reports public component members that the template reads, because the style guide asks for `protected` there. The rule has an autofix. It matches names with regular expressions and cannot see usage in other files, so keep a member public with an `eslint-disable` comment when a test or another class needs it. The component and directive selector prefix is `app`, which is the Angular default.
+The rules enforce the [Angular style guide](https://angular.dev/style-guide). `prefer-signals` and `prefer-output-emitter-ref` ban decorator-based inputs, outputs and queries, and `prefer-standalone` bans non-standalone components, directives and pipes. The custom `ng-anti-slop/protected-template-members` rule reports public component members that the template reads, because the style guide asks for `protected` there. The rule has an autofix. It matches names with regular expressions and cannot see usage in other files, so keep a member public with an `eslint-disable` comment when a test or another class needs it. The component and directive selector prefix is `app`, which is the Angular default.
 
 The plugin also ports ten rules from [anti-slop](https://github.com/dmmulroy/anti-slop) that reject low-evidence TypeScript. They use syntax and lexical scope, not the type checker, so they resolve type aliases in the same file but not imported types.
 
@@ -43,7 +43,7 @@ The plugin also ports ten rules from [anti-slop](https://github.com/dmmulroy/ant
 ## Compatibility
 
 - **Angular:** 18 and later. The `angular-eslint` rules read the Angular compiler in your project, so templates with control flow (`@if`, `@for`) need Angular 17 or later.
-- **Signal APIs:** the decorator ban needs `input()`, `output()` and the signal queries. These exist in Angular 18 but are stable only from Angular 19. On Angular 18, remove the `Decorator[...]` selector from `no-restricted-syntax` if you do not accept developer-preview APIs.
+- **Signal APIs:** `prefer-signals` and `prefer-output-emitter-ref` need `input()`, `output()` and the signal queries. These exist in Angular 18 but are stable only from Angular 19. On Angular 18, turn off these two rules if you do not accept developer-preview APIs.
 - **TypeScript:** use the version your Angular release supports. Angular 18 needs 5.4 or 5.5. The compiler options in `tsconfig.json` work on those versions.
 - **ESLint:** 10 needs Node 20.19 or later. `angular-eslint` 22 also supports ESLint 9 if you need older Node.
 - **Decorators:** `experimentalDecorators` is on because the Angular CLI compiles with it.

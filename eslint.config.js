@@ -46,46 +46,29 @@ export default defineConfig([
       'max-depth': ['error', 3],
       'max-lines': ['error', { max: 500, skipBlankLines: true, skipComments: true }],
       'max-lines-per-function': ['error', { max: 50, skipBlankLines: true, skipComments: true }],
-      'max-nested-callbacks': ['error', 3],
       'max-params': ['error', 4],
-      'max-statements': ['error', 15],
 
       // Simpler control flow
-      'no-else-return': 'error',
-      'no-lonely-if': 'error',
-      'no-negated-condition': 'error',
       'no-nested-ternary': 'error',
-      'no-unneeded-ternary': 'error',
       'no-unreachable-loop': 'error',
-      'no-useless-return': 'error',
-      'no-lone-blocks': 'error',
 
       // Bug prevention
       'array-callback-return': 'error',
-      'default-case': 'error',
       eqeqeq: ['error', 'always'],
       'no-await-in-loop': 'error',
-      'no-constructor-return': 'error',
       'no-promise-executor-return': 'error',
       'no-self-compare': 'error',
       'no-template-curly-in-string': 'error',
       'no-unmodified-loop-condition': 'error',
-      'no-bitwise': 'error',
       '@typescript-eslint/no-shadow': 'error',
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
 
-      // Immutability and clear intent
+      // Immutability
       'no-param-reassign': ['error', { props: true }],
-      'no-multi-assign': 'error',
-      'no-sequences': 'error',
 
       // Modern, consistent syntax
-      'logical-assignment-operators': 'error',
-      'no-useless-concat': 'error',
       'no-useless-rename': 'error',
       'object-shorthand': 'error',
-      'operator-assignment': 'error',
-      'prefer-object-spread': 'error',
       'prefer-template': 'error',
       '@typescript-eslint/consistent-type-imports': 'error',
 
@@ -104,6 +87,8 @@ export default defineConfig([
       '@angular-eslint/prefer-output-emitter-ref': 'error',
       '@angular-eslint/prefer-host-metadata-property': 'error',
       '@angular-eslint/no-async-lifecycle-method': 'error',
+      '@angular-eslint/prefer-standalone': 'error',
+      '@angular-eslint/prefer-inject': 'error',
 
       // Angular style guide
       '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
@@ -112,31 +97,6 @@ export default defineConfig([
       '@typescript-eslint/naming-convention': [
         'error',
         { selector: 'method', format: null, custom: { regex: '^(on|handle)[A-Z]', match: false } },
-      ],
-      'no-restricted-imports': [
-        'error',
-        {
-          paths: [
-            {
-              name: '@angular/common',
-              importNames: ['CommonModule', 'NgIf', 'NgFor', 'NgForOf', 'NgSwitch'],
-              message: 'Use built-in control flow (@if, @for, @switch) instead.',
-            },
-          ],
-        },
-      ],
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector:
-            'Decorator[expression.callee.name=/^(Input|Output|ViewChild|ViewChildren|ContentChild|ContentChildren)$/]',
-          message:
-            'Use input(), output(), viewChild(), viewChildren(), contentChild() or contentChildren().',
-        },
-        {
-          selector: 'Decorator[expression.callee.name="NgModule"]',
-          message: 'Use standalone components, directives and pipes instead of NgModule.',
-        },
       ],
     },
   },
@@ -151,7 +111,7 @@ export default defineConfig([
       '@angular-eslint/template/prefer-class-binding': 'error',
       '@angular-eslint/template/prefer-style-binding': 'error',
       '@angular-eslint/template/prefer-ngsrc': 'error',
-      '@angular-eslint/template/no-call-expression': 'error',
+      '@angular-eslint/template/prefer-control-flow': 'error',
     },
   },
 ]);
